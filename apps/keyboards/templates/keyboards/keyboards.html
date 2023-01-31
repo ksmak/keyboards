@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'keyboards/css/style.css' %}">
+    <title>Keys</title>
+</head>
+<body>
+    <div class="content">
+        <h1>Клавиaтуры</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ ctx_form }}
+            <input type="submit" value="Добавить клавиатуру">
+        </form>
+        <br>
+        <hr>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>набор клавиш</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for keyboard in ctx_keyboards %}
+                <tr>
+                    <th>{{keyboard.id}}</th>
+                    <th>
+                        {% for key in keyboard.keys.all %}
+                        <span>{{ key.symbol }}</span>
+                        {% endfor %}
+                    </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
